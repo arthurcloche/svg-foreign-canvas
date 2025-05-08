@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG to Canvas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        svg {
+            border: 1px solid #ccc;
+            background-color: white;
+        }
+        div {
+            padding: 10px;
+            text-align: center;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        img {
+            width: 100px;
+            height: 100px;
+            margin-top: 10px;
+        }
+        h1 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 14px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <svg id="svgElement" xmlns="http://www.w3.org/2000/svg" width="300" height="300">
+        <foreignObject width="100%" height="100%">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="width: 300px; height: 300px;">
+                <h1>Welcome to My SVG Section</h1>
+                <p>This is a simple example of embedding HTML content inside an SVG using a foreignObject. The button and image are interactive elements.</p>
+                <button>Click Me</button>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1024px-React-icon.svg.png" alt="Example">
+            </div>
+        </foreignObject>
+    </svg>
+    <canvas id="canvas" width="300" height="300"></canvas>
+
+    <script>
+        const svgElement = document.getElementById('svgElement');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        function renderSvgToCanvas() {
+            const svgData = new XMLSerializer().serializeToString(svgElement);
+            const img = new Image();
+            img.onload = function() {
+                ctx.drawImage(img, 0, 0);
+            };
+            img.src = 'data:image/svg+xml;base64,' + btoa(svgData);
+        }
+
+        renderSvgToCanvas();
+    </script>
+</body>
+</html> 
